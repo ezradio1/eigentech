@@ -7,3 +7,7 @@ export const searchResultTitle = css`
   }
   padding: 16px 0 32px 0;
 `
+
+export const column = css`
+  cursor: pointer;
+`

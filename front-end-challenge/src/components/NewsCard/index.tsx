@@ -1,4 +1,4 @@
-import { Card } from "antd";
+import { Card, Image, Typography } from "antd";
 import dayjs from "dayjs";
 import { noop } from "utils/noop";
 import NoImage from "./components/NoImage";
@@ -6,6 +6,7 @@ import { isImage } from "./index.helpers";
 import * as css from "./index.styles";
 import { NewsCardProps } from "./index.types";
 
+const { Paragraph } = Typography;
 const NewsCard = (props: NewsCardProps) => {
   const {
     urlToImage,
@@ -18,24 +19,23 @@ const NewsCard = (props: NewsCardProps) => {
   } = props;
 
   const cover = isImage(urlToImage) ? (
-    <img src={urlToImage} alt='article' height={200} />
+    <Image preview={false} src={urlToImage} alt='article' height={200} />
   ) : (
-    <video width='100' height='200' controls>
-      <source src={urlToImage} type='video/mp4' />
-    </video>
+    <NoImage />
   );
+
   return (
-    <Card
-      className={css.articleCard}
-      cover={urlToImage ? cover : <NoImage />}
-      onClick={onClick}
-    >
-      <p className={css.articleTitle}>{title}</p>
-      <p className={css.articleInfo}>{author || "No Author"}</p>
-      <p className={css.articleInfo}>
+    <Card className={css.articleCard} cover={cover} onClick={onClick}>
+      <Paragraph strong className={css.articleTitle}>
+        {title}
+      </Paragraph>
+      <Paragraph className={css.articleInfo} strong>
+        {author || "No Author"}
+      </Paragraph>
+      <Paragraph className={css.articleInfo} strong>
         {dayjs(publishedAt).format("DD MMMM YYYY")} - {sourceName}
-      </p>
-      <p className={css.articleContent}>{content}</p>
+      </Paragraph>
+      <Paragraph className={css.articleContent}>{content}</Paragraph>
     </Card>
   );
 };

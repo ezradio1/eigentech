@@ -21,7 +21,7 @@ const ModalLogin = (props: ModalLoginProps) => {
           name='username'
           rules={[{ required: true, message: "Please input your username!" }]}
         >
-          <Input style={{ width: "100%" }} placeholder='Enter your username' />
+          <Input placeholder='Enter your username' />
         </Form.Item>
 
         <Form.Item

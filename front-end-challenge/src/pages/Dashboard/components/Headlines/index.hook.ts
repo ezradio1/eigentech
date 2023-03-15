@@ -1,11 +1,23 @@
 import useFetchData from 'hooks/useFetchData'
-import { Headline } from './index.types'
+import { Article, News } from 'pages/types'
+import { useHistory } from 'react-router-dom'
+
 const useIndex = () => {
-  const { data, loading, error } = useFetchData<Headline>('top-headlines', {
+  const history = useHistory()
+  const { data, loading, error } = useFetchData<News>('top-headlines', {
     country: 'us',
   })
 
-  return { data, loading, error }
+  const handleClickNews = (article: Article) => {
+    history.push({ pathname: 'news-detail', state: article })
+  }
+
+  return {
+    data: { ...data, articles: data?.articles || [] },
+    loading,
+    error,
+    handleClickNews,
+  }
 }
 
 export default useIndex

@@ -1,4 +1,5 @@
-import { Image } from "antd";
+import React from "react";
+import { Col, Image, Row, Typography } from "antd";
 import ErrorState from "components/ErrorState";
 import FlexLayout from "components/FlexLayout";
 import LoadingState from "components/LoadingState";
@@ -7,10 +8,19 @@ import { Helmet } from "react-helmet";
 import useIndex from "./index.hook";
 import * as css from "./index.styles";
 
+const { Title, Paragraph } = Typography;
 const NewsDetail = () => {
   const { data, error, loading } = useIndex();
-  const { urlToImage, title, author, url, description, publishedAt, content } =
-    data;
+  const {
+    urlToImage,
+    title,
+    author,
+    url,
+    description,
+    publishedAt,
+    content,
+    source,
+  } = data || {};
 
   if (loading) return <LoadingState />;
 
@@ -21,27 +31,39 @@ const NewsDetail = () => {
       <Helmet>
         <title>E-News | News Detail</title>
       </Helmet>
-      <FlexLayout align='start' gap='24px'>
-        <Image width={500} height={400} src={urlToImage || ""} />
-        <FlexLayout direction='column' align='start' gap='14px'>
-          <h2>{title}</h2>
+      <Row gutter={{ sm: 32, lg: 32 }}>
+        <Col xs={24} sm={24} lg={12}>
+          <Image
+            height={400}
+            src={urlToImage || ""}
+            alt={urlToImage || ""}
+            className={css.newsImage}
+          />
+        </Col>
+        <Col xs={24} sm={24} lg={12}>
+          <Title level={2}>{title}</Title>
           <hr className={css.title} />
           <div>
-            <p className={css.infoDetail}>Author: {author}</p>
-            <p className={css.infoDetail}>
+            <Paragraph className={css.infoDetail} strong>
+              Author: {author}
+            </Paragraph>
+            <Paragraph className={css.infoDetail} strong>
               Published Date: {convertDate(publishedAt)}
-            </p>
-            <p className={css.infoDetail}>
+            </Paragraph>
+            <Paragraph className={css.infoDetail} strong>
+              Source: {source.name}
+            </Paragraph>
+            <Paragraph className={css.infoDetail} strong>
               Source Url:{" "}
               <a href={url} target='_blank' rel='noreferrer'>
                 {url}
               </a>
-            </p>
+            </Paragraph>
           </div>
-          <p className={css.description}>{description}</p>
-        </FlexLayout>
-      </FlexLayout>
-      <p className={css.description}>{content}</p>
+          <Paragraph className={css.description}>{description}</Paragraph>
+        </Col>
+      </Row>
+      <Paragraph className={css.description}>{content}</Paragraph>
     </FlexLayout>
   );
 };

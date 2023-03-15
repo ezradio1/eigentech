@@ -6,3 +6,9 @@
 p {
   margin: 0;
 }
+
+.ant-typography {
+  margin-bottom: 0 !important;
+  font-family: 'Poppins', sans-serif;
+
+}

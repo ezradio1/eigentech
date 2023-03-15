@@ -5,6 +5,7 @@ import { message } from 'antd'
 import { useUserContext } from 'context/UserContext'
 import { USER_LS_KEY } from 'constants/key'
 import { UserData } from 'pages/types'
+
 const useIndex = ({ onCloseModal }: ModalLoginProps) => {
   const [loading, setLoading] = useState(false)
   const { setLoggedUser } = useUserContext()
@@ -17,6 +18,7 @@ const useIndex = ({ onCloseModal }: ModalLoginProps) => {
       (user: UserData) =>
         user.username === value.username && user.password === value.password,
     )
+    console.log(findUserIndex, 'findUserIndex')
     setTimeout(() => {
       setLoading(false)
       if (findUserIndex === -1) {

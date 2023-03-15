@@ -12,7 +12,7 @@ const useIndex = () => {
     }, 500)
   }, [])
 
-  return { data: state || [], error: !state, loading }
+  return { data: state, error: !state, loading }
 }
 
 export default useIndex

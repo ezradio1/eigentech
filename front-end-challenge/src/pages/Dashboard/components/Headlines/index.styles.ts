@@ -5,7 +5,6 @@ export const image = (imageUrl: string) => css`
   position: relative;
   background: url(${imageUrl}) no-repeat center center;
   background-size: cover;
-  width: 380px;
   height: 450px;
   padding: 16px 24px;
   transition: box-shadow 0.2s ease-in-out;
@@ -37,19 +36,11 @@ export const image = (imageUrl: string) => css`
 `
 
 export const title = css`
-  color: ${NN0};
-  font-weight: 700;
+  color: ${NN0} !important;
   z-index: 0;
 `
 
-export const headerTitle = css`
-  font-weight: 700;
-  font-size: 18px;
-  max-width: 50vw;
-`
-
 export const authorPublishDate = css`
-  font-size: 14px;
   color: ${NN300};
   margin-top: 8px;
 `

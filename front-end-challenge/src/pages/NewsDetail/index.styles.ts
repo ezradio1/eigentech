@@ -4,15 +4,17 @@ import { NN200, NN300 } from 'constants/colors'
 export const title = css`
   color: ${NN200};
   width: 100%;
+  margin: 12px 0;
 `
 
 export const infoDetail = css`
-  font-size: 12px;
   color: ${NN300};
-  font-weight: 600;
 `
 
 export const description = css`
-  font-size: 14px;
   margin-top: 16px;
+`
+
+export const newsImage = css`
+  object-fit: cover;
 `
