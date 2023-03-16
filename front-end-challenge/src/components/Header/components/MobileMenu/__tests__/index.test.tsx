@@ -2,25 +2,46 @@ import { render, screen } from "@testing-library/react";
 import { USER_LS_KEY } from "constants/key";
 import { UserProvider } from "context/UserContext";
 import MobileMenu from "../index";
+import useIndex from "../index.hook";
+
+// @start mock
+jest.mock("../index.hook", () => jest.fn());
+const handleActionMock = jest.fn();
+const useIndexMock = {
+  visible: true,
+  setVisible: jest.fn(),
+  handleAction: handleActionMock,
+};
+
+const handleSearchMock = jest.fn();
+const handleLogoutMock = jest.fn();
+const handleLoginMock = jest.fn();
+const handleSignupMock = jest.fn();
+// @end mock
 
 describe("MobileMenu", () => {
+  beforeEach(() => {
+    const mockUseIndexHook = useIndex as jest.MockedFunction<typeof useIndex>;
+    mockUseIndexHook.mockReturnValue(useIndexMock);
+  });
+
   it("should render the menu", () => {
-    const handleSearch = jest.fn();
-    const handleLogout = jest.fn();
-    const handleLogin = jest.fn();
-    const handleSignup = jest.fn();
     render(
       <UserProvider>
         <MobileMenu
-          handleSearch={handleSearch}
-          handleLogout={handleLogout}
-          handleLogin={handleLogin}
-          handleSignup={handleSignup}
+          handleSearch={handleSearchMock}
+          handleLogout={handleLogoutMock}
+          handleLogin={handleLoginMock}
+          handleSignup={handleSignupMock}
         />
       </UserProvider>
     );
 
     expect(screen.getByText("Menu")).toBeInTheDocument();
+
+    localStorage.removeItem(USER_LS_KEY);
+    const mockUseIndexHook = useIndex as jest.MockedFunction<typeof useIndex>;
+    mockUseIndexHook.mockReturnValue({ ...useIndexMock, visible: true });
     expect(screen.getByText("Login")).toBeInTheDocument();
     expect(screen.getByText("Sign Up")).toBeInTheDocument();
 
@@ -32,10 +53,10 @@ describe("MobileMenu", () => {
     render(
       <UserProvider>
         <MobileMenu
-          handleSearch={handleSearch}
-          handleLogout={handleLogout}
-          handleLogin={handleLogin}
-          handleSignup={handleSignup}
+          handleSearch={handleSearchMock}
+          handleLogout={handleLogoutMock}
+          handleLogin={handleLoginMock}
+          handleSignup={handleSignupMock}
         />
       </UserProvider>
     );
@@ -44,14 +65,14 @@ describe("MobileMenu", () => {
 
     const logoutButton = screen.getByText("Logout");
     logoutButton.click();
-    expect(handleLogout).toHaveBeenCalled();
+    expect(handleActionMock).toHaveBeenCalledWith(handleLogoutMock);
 
     const loginButton = screen.getByText("Login");
     loginButton.click();
-    expect(handleLogin).toHaveBeenCalled();
+    expect(handleActionMock).toHaveBeenCalledWith(handleLoginMock);
 
     const signupButton = screen.getByText("Sign Up");
     signupButton.click();
-    expect(handleSignup).toHaveBeenCalled();
+    expect(handleActionMock).toHaveBeenCalledWith(handleSignupMock);
   });
 });

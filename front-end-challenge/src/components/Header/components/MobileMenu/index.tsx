@@ -45,7 +45,7 @@ const MobileMenu = (props: MobileMenuProps) => {
 
   return (
     <Dropdown
-      open={true}
+      open={visible}
       menu={{ items: name ? itemsUserLoggedIn : itemsUserNotLoggedIn }}
     >
       <Paragraph onClick={() => setVisible(!visible)} className={css.wrapper}>
